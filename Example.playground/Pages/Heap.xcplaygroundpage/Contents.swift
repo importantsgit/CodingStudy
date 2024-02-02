@@ -1,18 +1,28 @@
-struct Heap {
-    private var elements: [Int]
-    private var orderCriteria: (Int, Int) -> Bool
+struct Heap<T: Comparable> {
+    private var elements: [T]
+    private var orderCriteria: (T, T) -> Bool
     
     var isEmpty: Bool {
-        self.elements.count == 1
+        elements.count <= 1
     }
     
-    var peak: Int? {
+    var peak: T? {
         isEmpty ? nil : elements[1]
     }
     
-    init(elements: [Int] = [0], sort: @escaping (Int, Int) -> Bool) {
-        self.elements = elements
+    init(elements: [T] = [], sort: @escaping (T, T) -> Bool) {
+        if elements.isEmpty == false {
+            self.elements = [elements[0]] + elements
+        }
+        else {
+            self.elements = elements
+        }
+        
         self.orderCriteria = sort
+        
+        if self.elements.count > 1 {
+            
+        }
     }
     
     func leftChild(of index: Int) -> Int {
@@ -27,55 +37,61 @@ struct Heap {
         (index - 1) / 2
     }
     
-    mutating func swimUp(from index: Int) {
-        var index = index
-        while index != 1
-                && self.orderCriteria(elements[index], elements[parent(of: index)]) {
-            elements.swapAt(index, parent(of: index))
-            index = parent(of: index)
+    mutating func buildHeap() {
+        for index in (1...(self.elements.count/2)).reversed() {
+            diveDown(from: index)
         }
     }
     
-    mutating func insert(item: Int) {
-        if isEmpty {
-            self.elements.append(item)
-            return
-        }
+    mutating func swimUp(from index: Int) {
+        var index = index
+        let parentIndex = parent(of: index)
         
-        self.elements.append(item)
-        self.swimUp(from: self.elements.endIndex - 1)
+        while parentIndex >= 1 && orderCriteria(elements[index], elements[parentIndex]) {
+            elements.swapAt(index, parentIndex)
+            index = parentIndex
+        }
+    }
+    
+    mutating func insert(element: T) {
+        if elements.isEmpty {
+            elements.append(element)
+        }
+        elements.append(element)
+        swimUp(from: elements.endIndex - 1)
     }
     
     mutating func diveDown(from index: Int) {
-        let leftChildIndex = self.leftChild(of: index)
-        let rightChildIndex = self.rightChild(of: index)
         var higherPriority = index
+        let leftChildIndex = leftChild(of: index)
+        let rightChildIndex = rightChild(of: index)
         
-        if leftChildIndex < self.elements.endIndex
-            && orderCriteria(elements[index], elements[leftChildIndex]) {
+        if leftChildIndex <= elements.endIndex - 1 && orderCriteria(elements[higherPriority], elements[leftChildIndex]) {
             higherPriority = leftChildIndex
         }
         
-        if rightChildIndex < self.elements.endIndex
-            && orderCriteria(elements[index], elements[rightChildIndex]) {
+        if rightChildIndex <= elements.endIndex - 1 && orderCriteria(elements[higherPriority], elements[rightChildIndex]) {
             higherPriority = rightChildIndex
         }
         
         if higherPriority != index {
-            self.elements.swapAt(index,higherPriority)
+            elements.swapAt(higherPriority, index)
             diveDown(from: higherPriority)
         }
     }
     
-    mutating func pop(from index: Int) -> Int? {
-        if isEmpty || index > self.elements.endIndex { return nil }
-        else if self.elements.endIndex == 1 { return self.elements.removeLast() }
+    mutating func pop() -> T? {
+        if isEmpty {
+            return nil
+        }
+        else if elements.count == 2 {
+            return elements.removeLast()
+        }
         
-        elements.swapAt(index, self.elements.endIndex)
-        let popItem = self.elements.removeLast()
         
-        self.diveDown(from: index)
-        
+        elements.swapAt(1, elements.endIndex - 1)
+        let popItem = elements.removeLast()
+        diveDown(from: 1)
         return popItem
     }
 }
