@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <playground version='6.0' target-platform='ios' buildActiveScheme='true' importAppTypes='true'>
     <pages>
+        <page name='Array'/>
+        <page name='Math'/>
+        <page name='String'/>
         <page name='KruskalAlgorithm'/>
         <page name='PrimAlgorithm'/>
         <page name='Heap'/>
         <page name='PriorityQueue'/>
         <page name='BFS'/>
         <page name='DFS'/>
-        <page name='String'/>
         <page name='SlideWindow'/>
         <page name='TwoPoint'/>
+        <page name='Dijkstra'/>
+        <page name='GCD_LCM'/>
+        <page name='PrimeNumber'/>
     </pages>
 </playground>
