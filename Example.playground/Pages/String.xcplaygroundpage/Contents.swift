@@ -33,3 +33,4 @@ extension String {
 }
 
 let replacingString = string2.replacingOccurrences(of: "A", with: "D")
+let str = string[Range(1...2)]

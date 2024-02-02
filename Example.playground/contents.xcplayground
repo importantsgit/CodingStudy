@@ -8,5 +8,7 @@
         <page name='BFS'/>
         <page name='DFS'/>
         <page name='String'/>
+        <page name='SlideWindow'/>
+        <page name='TwoPoint'/>
     </pages>
 </playground>
