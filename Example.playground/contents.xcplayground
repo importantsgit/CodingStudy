@@ -15,5 +15,8 @@
         <page name='Dijkstra'/>
         <page name='GCD_LCM'/>
         <page name='PrimeNumber'/>
+        <page name='Code1'/>
+        <page name='Code2'/>
+        <page name='code3'/>
     </pages>
 </playground>
