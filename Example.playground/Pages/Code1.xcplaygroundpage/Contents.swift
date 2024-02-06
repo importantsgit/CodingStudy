@@ -21,9 +21,9 @@ func findMinimumMoves(line: Int, currentPosition: Int, moveCount: Int) -> Int {
             minMoves = min(cache[line + 1][movePosition], minMoves)
         }
         // 캐시에 값이 저장되어 있지 않으면 escalatorMap == "0" 경우 체크
-        if escalatorMap[line + 1][movePosition] == "0" {
+       else if escalatorMap[line + 1][movePosition] == "0" {
             var findMoveCount = findMinimumMoves(
-                line: line + movePosition,
+                line: line + 1,
                 currentPosition: movePosition,
                 moveCount: moveCount + abs(movePosition - currentPosition)
             )
