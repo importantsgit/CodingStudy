@@ -1,32 +1,44 @@
 
 
-re()
-
-
-func re() -> Int {
-    let n = 7
-    let arr = [1, 3, 2, 3, 4, 4, 5]
-    var items = [1, 0, 2, 0, 0]
-    var item = items
+func minimumCheck(_ n: Int, _ conveyor: [Int], _ items: [Int]) -> Int {
+    var itemsToDeliver = items
+    var totalItemsToDeliver = items.reduce(0, +)
     
-    for (index, item) in items.enumerated() {
-        if arr.filter({$0 == index + 1}).count < item {
+    // 필터링 (만약 답을 도출할 수 없다면 -1 반환)
+    for (item, count) in items.enumerated() {
+        let itemCount = conveyor.filter { $0 == item + 1 }.count
+        if itemCount < count {
             return -1
         }
     }
     
-    var value = 201
+    var minValue = 10000
     
-    for index in arr.indices {
-        var point = 0
+    // 인덱스를 하나씩 늘려 그 위치에서 계산
+    for i in 0..<n {
+        var currentPosition = i
+        var itemsChecked = 1
+        itemsToDeliver = items
         
-        while items.reduce(0, +) != 0 {
-            print((index+point) % (n - 1))
-            items[arr[(index+point) % (n - 1)] - 1] -= items[arr[(index+point) % (n - 1)] - 1] > 0 ? 1 : 0
-            point += 1
+        // 아이템 계산
+        while itemsToDeliver.reduce(0, +) > 0 {
+            // If there are items to deliver
+            if itemsToDeliver[conveyor[currentPosition] - 1] > 0 {
+                itemsToDeliver[conveyor[currentPosition] - 1] -= 1
+                itemsChecked += 1
+            }
+            currentPosition = (currentPosition + 1) % n
         }
-        value = min(value, point)
+        
+        // while문이 끝나면 체크한 값과 저장되어 있는 값을 비교해 minValue에 저장
+        minValue = min(minValue, itemsChecked)
     }
-
-    return value
+    
+    return minValue
 }
+
+let n = 7
+let conveyor = [1, 1, 1, 3, 3, 3, 3]
+let items = [1, 0, 2, 0, 0]
+
+print(minimumCheck(n, conveyor, items))
