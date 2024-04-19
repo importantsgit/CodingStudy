@@ -7,3 +7,20 @@ for (index, num) in arr.enumerated() {
 for i in arr.indices {
     print(i)
 }
+
+var ans = 0
+var A = [1,2,3]
+var B = [1,2,3]
+
+// zip sequence 나열
+for (AItem, BItem) in zip(A, B) {
+    ans += AItem * BItem
+}
+
+extension Collection {
+    subscript (safe index: Index) -> Element? {
+        return indices.contains(index) ? self[index] : nil
+    }
+}
+
+

@@ -18,7 +18,6 @@ func slideWindow(arr: [Int], count: Int, max: Int) {
             resultArr.append([index+1, endIndex])
         }
     }
-    print(resultArr)
     resultArr.forEach {
         print(arr[$0[0]...$0[1]])
         print(arr[$0[0]...$0[1]].reduce(0, +))

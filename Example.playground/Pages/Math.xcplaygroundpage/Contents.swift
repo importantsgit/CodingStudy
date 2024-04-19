@@ -28,3 +28,10 @@ let absNum = abs(-10)
 //MARK: - 제곱
 let sqrtNum = Int(sqrt(Double(100)))
 let powNum = Int(pow(Double(10), 2))
+
+//MARK: - 반올림
+round(1.0)
+//MARK: - 내림
+floor(1.0)
+//MARK: - 올림
+ceil(1.0)

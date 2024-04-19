@@ -34,7 +34,7 @@ struct Heap<T: Comparable> {
     }
     
     func parent(of index: Int) -> Int {
-        (index - 1) / 2
+        index / 2
     }
     
     mutating func buildHeap() {
